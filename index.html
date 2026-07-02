@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinesh Jangili — .NET Developer Trainee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1620;
+    --panel:#161F2C;
+    --panel-2:#1C2836;
+    --steel:#2A3C4F;
+    --mist:#8FA3B3;
+    --fog:#D7DEE5;
+    --cyan:#5FD4C4;
+    --amber:#E8A33D;
+    --radius:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--fog);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;color:#fff;letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:var(--cyan);text-decoration:none;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 32px;}
+  section{padding:96px 0;}
+  @media (max-width:640px){section{padding:64px 0;} .wrap{padding:0 20px;}}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(15,22,32,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--steel);
+  }
+  nav .wrap{display:flex;justify-content:space-between;align-items:center;height:64px;}
+  .brand{font-family:'JetBrains Mono',monospace;font-weight:600;color:#fff;font-size:15px;}
+  .brand span{color:var(--cyan);}
+  nav ul{display:flex;gap:28px;list-style:none;}
+  nav a{color:var(--mist);font-size:14px;font-family:'JetBrains Mono',monospace;transition:color .2s;}
+  nav a:hover{color:var(--cyan);}
+  .nav-toggle{display:none;}
+  @media (max-width:700px){
+    nav ul{display:none;}
+  }
+
+  /* HERO */
+  .hero{
+    min-height:100vh;display:flex;align-items:center;
+    padding-top:64px;position:relative;
+  }
+  .hero .wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;}
+  @media (max-width:860px){.hero .wrap{grid-template-columns:1fr;} .hero{min-height:auto;padding-bottom:60px;}}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--amber);font-size:13px;
+    text-transform:uppercase;letter-spacing:0.12em;margin-bottom:18px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:'';width:8px;height:8px;background:var(--amber);border-radius:50%;box-shadow:0 0 8px var(--amber);}
+  .hero h1{font-size:clamp(36px,5vw,54px);line-height:1.08;margin-bottom:16px;}
+  .hero h1 .accent{color:var(--cyan);}
+  .hero p.lede{font-size:17px;color:var(--mist);max-width:520px;margin-bottom:32px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    padding:13px 24px;border-radius:8px;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;
+    display:inline-flex;align-items:center;gap:8px;transition:all .2s;border:1px solid transparent;
+  }
+  .btn-primary{background:var(--cyan);color:#0F1620;}
+  .btn-primary:hover{background:#7fe0d3;transform:translateY(-1px);}
+  .btn-outline{border-color:var(--steel);color:var(--fog);}
+  .btn-outline:hover{border-color:var(--cyan);color:var(--cyan);}
+  .contact-strip{display:flex;gap:20px;flex-wrap:wrap;margin-top:36px;font-size:13px;color:var(--mist);font-family:'JetBrains Mono',monospace;}
+  .contact-strip a{color:var(--mist);}
+  .contact-strip a:hover{color:var(--cyan);}
+
+  /* SIGNATURE: layered architecture stack */
+  .stack{position:relative;height:380px;perspective:1000px;}
+  .layer{
+    position:absolute;left:50%;width:88%;
+    background:var(--panel);border:1px solid var(--steel);border-radius:12px;
+    padding:20px 22px;box-shadow:0 20px 40px -20px rgba(0,0,0,0.6);
+    transform:translateX(-50%);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s;
+  }
+  .layer .tag{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--amber);}
+  .layer h4{font-size:16px;margin:6px 0 4px;color:#fff;}
+  .layer p{font-size:12.5px;color:var(--mist);}
+  .layer-1{top:0;z-index:3;}
+  .layer-2{top:110px;z-index:2;background:var(--panel-2);}
+  .layer-3{top:220px;z-index:1;}
+  .stack:hover .layer-1{transform:translateX(-50%) translateY(-14px);}
+  .stack:hover .layer-2{transform:translateX(-50%) translateY(0);}
+  .stack:hover .layer-3{transform:translateX(-50%) translateY(14px);}
+  .stack-caption{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mist);margin-top:14px;}
+
+  /* SECTION HEADERS */
+  .section-head{margin-bottom:44px;}
+  .section-head .num{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:13px;letter-spacing:.08em;}
+  .section-head h2{font-size:28px;margin-top:6px;}
+  hr.rule{border:none;border-top:1px solid var(--steel);margin:0 0 44px;}
+
+  /* SUMMARY */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .about-grid p{color:var(--fog);font-size:15.5px;}
+  .interests{margin-top:22px;padding:16px 18px;background:var(--panel);border:1px solid var(--steel);border-radius:var(--radius);font-size:13.5px;color:var(--mist);}
+  .interests b{color:var(--fog);}
+
+  /* SKILLS */
+  .skill-cats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media (max-width:640px){.skill-cats{grid-template-columns:1fr;}}
+  .skill-cat{background:var(--panel);border:1px solid var(--steel);border-radius:var(--radius);padding:20px;}
+  .skill-cat .cat-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--fog);
+    background:var(--panel-2);border:1px solid var(--steel);border-radius:6px;padding:5px 10px;
+  }
+
+  /* TIMELINE (experience + education) */
+  .timeline{position:relative;padding-left:28px;border-left:1px solid var(--steel);}
+  .t-item{position:relative;margin-bottom:36px;}
+  .t-item:last-child{margin-bottom:0;}
+  .t-item::before{
+    content:'';position:absolute;left:-33px;top:4px;width:9px;height:9px;border-radius:50%;
+    background:var(--cyan);box-shadow:0 0 0 4px rgba(95,212,196,0.15);
+  }
+  .t-date{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);}
+  .t-item h3{font-size:18px;margin:4px 0 2px;}
+  .t-item .org{font-size:13.5px;color:var(--mist);margin-bottom:10px;}
+  .t-item ul{padding-left:18px;color:var(--fog);font-size:14.5px;}
+  .t-item li{margin-bottom:6px;}
+  .t-item.edu .org{margin-bottom:2px;}
+  .t-item.edu .meta{font-size:13px;color:var(--mist);}
+
+  /* PROJECT */
+  .project-card{
+    background:var(--panel);border:1px solid var(--steel);border-radius:14px;
+    padding:32px;
+  }
+  .project-card h3{font-size:22px;margin-bottom:6px;}
+  .project-card .stack-tags{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 20px;}
+  .project-card ul{padding-left:18px;color:var(--fog);font-size:14.5px;}
+  .project-card li{margin-bottom:8px;}
+  .role-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+  .role-badge{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 12px;border-radius:20px;
+    border:1px solid var(--steel);color:var(--mist);
+  }
+
+  /* CERTS */
+  .cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media (max-width:640px){.cert-grid{grid-template-columns:1fr;}}
+  .cert{
+    display:flex;justify-content:space-between;align-items:center;
+    background:var(--panel);border:1px solid var(--steel);border-radius:var(--radius);
+    padding:16px 18px;font-size:14px;
+  }
+  .cert .issuer{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--amber);}
+
+  /* FOOTER / CONTACT */
+  footer{padding:80px 0 48px;border-top:1px solid var(--steel);text-align:center;}
+  footer h2{font-size:26px;margin-bottom:14px;}
+  footer p{color:var(--mist);margin-bottom:28px;}
+  footer .contact-strip{justify-content:center;}
+  footer .foot-note{margin-top:48px;font-size:12px;color:var(--steel);}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">dinesh<span>.jangili</span></div>
+    <ul>
+      <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#project">project</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#education">education</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">.NET Developer Trainee — Cognizant</div>
+      <h1>Building the layer<br>between <span class="accent">data</span> and<br>the people who use it.</h1>
+      <p class="lede">Dinesh Jangili — 6 months deep in C#, ASP.NET Core MVC, and EF Core, shipping clean multi-tier applications with Repository Pattern and Dependency Injection at their core.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#project">See the project</a>
+        <a class="btn btn-outline" href="#contact">Get in touch</a>
+      </div>
+      <div class="contact-strip">
+        <a href="mailto:dineshjangili007@gmail.com">dineshjangili007@gmail.com</a>
+        <span>+91-8179838600</span>
+        <span>Warangal, Telangana</span>
+        <a href="https://linkedin.com/in/jangili-dinesh34" target="_blank">linkedin.com/in/jangili-dinesh34</a>
+      </div>
+    </div>
+    <div>
+      <div class="stack" id="stack">
+        <div class="layer layer-1">
+          <div class="tag">Presentation</div>
+          <h4>Razor Views &amp; Controllers</h4>
+          <p>Role-based dashboards for Customer, Officer &amp; Admin.</p>
+        </div>
+        <div class="layer layer-2">
+          <div class="tag">Business Logic</div>
+          <h4>Services &amp; DI Containers</h4>
+          <p>Risk-scoring, validation, and workflow rules.</p>
+        </div>
+        <div class="layer layer-3">
+          <div class="tag">Data Access</div>
+          <h4>EF Core &amp; Repository Pattern</h4>
+          <p>MS SQL Server schemas, migrations, optimised LINQ.</p>
+        </div>
+      </div>
+      <div class="stack-caption">hover to separate the tiers — this is how Dinesh architects</div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <div class="num">01 / summary</div>
+      <h2>About</h2>
+    </div>
+    <hr class="rule">
+    <div class="about-grid">
+      <p>Results-driven .NET Developer Trainee with six months of hands-on experience building clean, scalable web applications in C#, ASP.NET Core MVC, and Entity Framework Core. Comfortable moving between presentation, business, and data layers on real production-style systems, and eager to grow inside a professional development team.</p>
+      <div>
+        <p>Currently applying that foundation at Cognizant, where day-to-day work spans schema design, migrations, and LINQ optimisation on MS SQL Server, alongside multi-tier MVC architecture built for maintainability.</p>
+        <div class="interests"><b>Outside the IDE:</b> a disciplined gym and fitness routine that sharpens focus, paired with ongoing research into emerging frameworks and tooling.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <div class="num">02 / experience</div>
+      <h2>Experience</h2>
+    </div>
+    <hr class="rule">
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-date">Jan 2026 — Present · 6 months</div>
+        <h3>.NET Developer Trainee</h3>
+        <div class="org">Cognizant</div>
+        <ul>
+          <li>Developed web applications using ASP.NET Core MVC and EF Core, implementing Repository Pattern and Dependency Injection for clean, maintainable multi-tier architecture.</li>
+          <li>Designed and managed MS SQL Server schemas, handling database operations through EF Core migrations and optimised LINQ queries.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="project">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <div class="num">03 / featured project</div>
+      <h2>Banking Onboarding &amp; KYC System</h2>
+    </div>
+    <hr class="rule">
+    <div class="project-card">
+      <h3>Multi-tier compliance platform</h3>
+      <div class="stack-tags">
+        <span class="chip">C#</span>
+        <span class="chip">ASP.NET Core MVC</span>
+        <span class="chip">EF Core</span>
+        <span class="chip">SQL Server</span>
+        <span class="chip">Repository Pattern</span>
+      </div>
+      <ul>
+        <li>Architected a multi-tier MVC application using Dependency Injection for clean separation of data access, business logic, and presentation layers.</li>
+        <li>Built secure customer registration flows, document upload pipelines, and automated risk-scoring logic to meet onboarding compliance standards.</li>
+        <li>Implemented role-based access control with dashboards for Customer, Officer, and Admin roles, alongside financial compliance audit logs.</li>
+      </ul>
+      <div class="role-strip">
+        <span class="role-badge">Customer dashboard</span>
+        <span class="role-badge">Officer dashboard</span>
+        <span class="role-badge">Admin dashboard</span>
+        <span class="role-badge">Audit logging</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <div class="num">04 / technical skills</div>
+      <h2>Stack</h2>
+    </div>
+    <hr class="rule">
+    <div class="skill-cats">
+      <div class="skill-cat">
+        <div class="cat-label">Languages</div>
+        <div class="chip-row">
+          <span class="chip">C# (Modern)</span><span class="chip">SQL</span><span class="chip">Java</span><span class="chip">Python</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="cat-label">Frameworks</div>
+        <div class="chip-row">
+          <span class="chip">ASP.NET Core MVC</span><span class="chip">EF Core</span><span class="chip">Razor Pages</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="cat-label">Databases</div>
+        <div class="chip-row">
+          <span class="chip">MS SQL Server</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="cat-label">Tools</div>
+        <div class="chip-row">
+          <span class="chip">Visual Studio 2026</span><span class="chip">Git</span><span class="chip">GitHub</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <div class="num">05 / education</div>
+      <h2>Education &amp; Certifications</h2>
+    </div>
+    <hr class="rule">
+    <div class="timeline" style="margin-bottom:44px;">
+      <div class="t-item edu">
+        <div class="t-date">Dec 2021 — May 2025</div>
+        <h3>BTech, Computer Science and Engineering</h3>
+        <div class="org">Kakatiya Institute of Technology and Science, Warangal (KITSW)</div>
+        <div class="meta">CGPA: 7.61</div>
+      </div>
+      <div class="t-item edu">
+        <div class="t-date">June 2019 — April 2021</div>
+        <h3>Intermediate (Class XII)</h3>
+        <div class="org">Sri Vikas Junior College</div>
+        <div class="meta">95.4%</div>
+      </div>
+      <div class="t-item edu">
+        <div class="t-date">March 2019</div>
+        <h3>Secondary (Class X)</h3>
+        <div class="org">Bharathi High School</div>
+        <div class="meta">GPA: 9.8</div>
+      </div>
+    </div>
+    <div class="cert-grid">
+      <div class="cert"><span>C# Programming Language</span><span class="issuer mono">Udemy</span></div>
+      <div class="cert"><span>ASP.NET MVC</span><span class="issuer mono">Udemy</span></div>
+      <div class="cert"><span>Entity Framework Core &amp; REST APIs</span><span class="issuer mono">Udemy</span></div>
+      <div class="cert"><span>Introduction to Cyber Security</span><span class="issuer mono">Cisco</span></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's build something maintainable.</h2>
+    <p>Open to opportunities where clean architecture and steady growth matter.</p>
+    <div class="contact-strip">
+      <a href="mailto:dineshjangili007@gmail.com">dineshjangili007@gmail.com</a>
+      <span>+91-8179838600</span>
+      <a href="https://linkedin.com/in/jangili-dinesh34" target="_blank">linkedin.com/in/jangili-dinesh34</a>
+    </div>
+    <div class="foot-note mono">&copy; 2026 Dinesh Jangili — built with a Repository Pattern mindset.</div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
